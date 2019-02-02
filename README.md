@@ -24,12 +24,12 @@ $ ./godotinstaller.sh
 Install these packages using default package manager.
 * wget
 * unzip
+* uname
 
 # Warning
-Only Works For Version 3.0.6 **(Will Provide Other Versions Soon)**
+Only Works For Version 3.0.6  & 2.1.5 **(Will Provide Download for Beta Versions Soon)**
 
 # Refference
 * [Godot Engine][1] - Free and open source 2D and 3D game engine
-
 
 [1]: https://godotengine.org
