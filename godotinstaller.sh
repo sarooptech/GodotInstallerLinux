@@ -11,6 +11,8 @@ MACHINE_TYPE=`uname -m`
 
 BIT=""
 
+DESKTOP_ENTRY_PATH=".local/share/applications"
+
 DESKTOP_ENTRY="[Desktop Entry]
 Type=Application
 Name=Godot VERSION
@@ -20,6 +22,8 @@ Comment=Game Engine
 Categories=Development;IDE;
 Terminal=false
 StartupWMClass=Godot"
+
+ICON="$HOME/Godot/icon.png"
 #-----------------------------------------
 #Function Declerations
 function main(){
@@ -58,12 +62,33 @@ function download(){
 	ceckbit
 	echo "Downloading Godot Using wget"
 	wget -P $INSTALL_DIR "https://downloads.tuxfamily.org/godotengine/$VERSION/Godot_v$VERSION-stable_x11.$BIT.zip"
-	
-	echo "Downloading Icon"
-	wget -P $INSTALL_DIR "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Godot_icon.svg/2000px-Godot_icon.svg.png"
-	cd "$INSTALL_DIR"
-	mv "2000px-Godot_icon.svg.png" "icon.png"
-	cd
+}
+
+#Function for downloading latest beta
+function downloadbeta(){
+	checkbit
+	echo "Downloading Godot Using wget"
+	wget -P $INSTALL_DIR "https://downloads.tuxfamily.org/godotengine/3.1/beta3/Godot_v3.1-beta3_x11.$BIT.zip"
+
+	downloadicon
+
+	echo "Generating Desktp Entry"
+	NEW_ENTRY=`echo "${DESKTOP_ENTRY//VERSION/$VERSION}"`
+	NEW_ENTRY=`echo "${NEW_ENTRY//stable/beta3}"`
+	echo "${NEW_ENTRY//BIT/$BIT}" >> "$HOME/Desktop/Godot_v$VERSION-beta3_x11.$BIT.desktop"
+}
+
+#Function for downloading ICON
+function downloadicon(){
+	if [ -f "$ICON" ]; then
+		echo "Icon Already Exist"
+	else
+		echo "Downloading Icon"
+		wget -P $INSTALL_DIR "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Godot_icon.svg/2000px-Godot_icon.svg.png"
+		cd "$INSTALL_DIR"
+		mv "2000px-Godot_icon.svg.png" "icon.png"
+		cd		
+	fi
 }
 
 #For checking if if Godot Drectory exist or not
@@ -80,9 +105,17 @@ function checkdir(){
 #For Making Desktop Entry
 function makedesktopentry(){
 	echo "Generating Desktp Entry"
-	DESKTOP_ENTRY=`echo "${DESKTOP_ENTRY//VERSION/$VERSION}"`
-	echo "${DESKTOP_ENTRY//BIT/$BIT}" >> "$HOME/Desktop/Godot_v$VERSION-stable_x11.$BIT.desktop"
-	#.local/share/applications/
+	NEW_ENTRY=`echo "${DESKTOP_ENTRY//VERSION/$VERSION}"`
+
+	echo "Checking if Downoad Directory Exist"
+	if [ -d "$DESKTOP_ENTRY_PATH" ]; then
+		echo "Making Desktop Entry Under Development Section of Your Application Menu"
+		echo "${NEW_ENTRY//BIT/$BIT}" >> "$DESKTOP_ENTRY_PATH/Godot_v$VERSION-stable_x11.$BIT.desktop"		
+	else
+		echo "Local Applications Folder Not Found"
+		echo "Making Desktop Entry on Your Desktop"
+		echo "${NEW_ENTRY//BIT/$BIT}" >> "$HOME/Desktop/Godot_v$VERSION-stable_x11.$BIT.desktop"
+	fi
 }
 
 #For Decompressing Downloaded Zip
@@ -102,11 +135,11 @@ function selectversion(){
 	(1) Godot 3.0.6 - Stable (Prefered)
 	(2) Godot 2.1.5 - Old Stable
 	(3) Godot 3.1 - Latest Beta Release
-	(4) All Versions
+	(4) Install All 3 Versions
 	(0) Back to Main Menu"
-	read -p "Enter Selection[1,2,3,0] >"
+	read -p "Enter Selection[1,2,3,4,0] >"
 
-	if [[ $REPLY =~ ^[0-3]$ ]]; then
+	if [[ $REPLY =~ ^[0-4]$ ]]; then
 
 		if [[ $REPLY == 0 ]]; then
 			main
@@ -114,36 +147,51 @@ function selectversion(){
 
 		if [[ $REPLY == 1 ]]; then
 			VERSION="3.0.6"
-			echo "Downloading $BIT bit Version of Godot $VERSION"
-			download
-			decompress
-			makedesktopentry
-			cleanup
+			downloadcommands
 		fi
 
 		if [[ $REPLY == 2 ]]; then
 			VERSION="2.1.5"
-			echo "Downloading $BIT bit Version of Godot $VERSION"
-			download
-			decompress
-			makedesktopentry
-			cleanup
+			downloadcommands
 		fi
 		if [[ $REPLY == 3 ]]; then
 			VERSION="3.1"
 			echo "Downloading $BIT bit Version of Godot $VERSION"
-			download
+			downloadbeta
 			decompress
-			makedesktopentry
 			cleanup
 		fi
 
 		if [[ $REPLY == 4 ]]; then
-			echo "Still Needs some work"
+			echo "Downloading All $BIT bit Version of Godot"
+			VERSION="3.0.6"
+			download
+			downloadicon
+			decompress
+			makedesktopentry
+			cleanup
+			VERSION="2.1.5"
+			download
+			decompress
+			makedesktopentry
+			cleanup
+			VERSION="3.1"
+			downloadbeta
+			decompress
+			cleanup
 		fi
 	else
-		echo "Invalid Entry" >&4
+		echo "Invalid Entry"
 	fi
+}
+
+function downloadcommands(){
+	echo "Downloading $BIT bit Version of Godot $VERSION"
+			download
+			decompress
+			downloadicon
+			makedesktopentry
+			cleanup
 }
 
 #For CHecking System Architecture
@@ -155,6 +203,7 @@ function checkbit(){
 	fi
 }
 
+#For Cleaning Installation Files
 function cleanup(){
 	rm $INSTALL_DIR*.zip
 }
