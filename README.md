@@ -31,6 +31,8 @@ $ chmod +x godotinstaller.sh
 ```bash
 $ ./godotinstaller.sh
 ```
+* To change a Installation path open script and change INSTALL_DIR="YourPathHere".
+
 Now Just Input Installation Choices and hit Enter. That's it.
 
 # Warnings
