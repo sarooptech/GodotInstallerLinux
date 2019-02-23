@@ -48,21 +48,21 @@ function download(){
 function downloadbeta(){
 	checkbit
 	echo "Downloading Godot Using wget"
-	wget -P $INSTALL_DIR "https://downloads.tuxfamily.org/godotengine/3.1/beta5/Godot_v3.1-beta5_x11.$BIT.zip"
+	wget -P $INSTALL_DIR "https://downloads.tuxfamily.org/godotengine/3.1/beta6/Godot_v3.1-beta6_x11.$BIT.zip"
 
 	downloadicon
-	
+
 	echo "Generating Desktp Entry"
 	echo "Checking if Downoad Directory Exist"
 	if [ -d "$DESKTOP_ENTRY_PATH" ]; then
-		
+
 		NEW_ENTRY=`echo "${DESKTOP_ENTRY//VERSION/$VERSION}"`
-		NEW_ENTRY=`echo "${NEW_ENTRY//stable/beta5}"`
-		echo "${NEW_ENTRY//BIT/$BIT}" >> "$DESKTOP_ENTRY_PATH/Godot_v$VERSION-beta5_x11.$BIT.desktop"
+		NEW_ENTRY=`echo "${NEW_ENTRY//stable/beta6}"`
+		echo "${NEW_ENTRY//BIT/$BIT}" >> "$DESKTOP_ENTRY_PATH/Godot_v$VERSION-beta6_x11.$BIT.desktop"
 	else
 		echo "Local Applications Folder Not Found"
 		echo "Created DesktopEntry at $HOME/Desktop"
-		echo "${NEW_ENTRY//BIT/$BIT}" >> "$HOME/Desktop/Godot_v$VERSION-beta5_x11.$BIT.desktop"
+		echo "${NEW_ENTRY//BIT/$BIT}" >> "$HOME/Desktop/Godot_v$VERSION-beta6_x11.$BIT.desktop"
 	fi
 }
 
