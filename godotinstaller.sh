@@ -44,28 +44,6 @@ function download(){
 	wget -P $INSTALL_DIR "https://downloads.tuxfamily.org/godotengine/$VERSION/Godot_v$VERSION-stable_x11.$BIT.zip"
 }
 
-#Function for downloading latest beta
-function downloadbeta(){
-	checkbit
-	echo "Downloading Godot Using wget"
-	wget -P $INSTALL_DIR "https://downloads.tuxfamily.org/godotengine/3.1/beta9/Godot_v3.1-rc1_x11.$BIT.zip"
-
-	downloadicon
-
-	echo "Generating Desktp Entry"
-	echo "Checking if Downoad Directory Exist"
-	if [ -d "$DESKTOP_ENTRY_PATH" ]; then
-
-		NEW_ENTRY=`echo "${DESKTOP_ENTRY//VERSION/$VERSION}"`
-		NEW_ENTRY=`echo "${NEW_ENTRY//stable/rc1}"`
-		echo "${NEW_ENTRY//BIT/$BIT}" >> "$DESKTOP_ENTRY_PATH/Godot_v$VERSION-rc1_x11.$BIT.desktop"
-	else
-		echo "Local Applications Folder Not Found"
-		echo "Created DesktopEntry at $HOME/Desktop"
-		echo "${NEW_ENTRY//BIT/$BIT}" >> "$HOME/Desktop/Godot_v$VERSION-rc1_x11.$BIT.desktop"
-	fi
-}
-
 #Function for downloading ICON
 function downloadicon(){
 	if [ -f "$ICON" ]; then
@@ -136,9 +114,9 @@ function cleanup(){
 function main(){
 	checkbit
 	echo "Select Godot Version To Install
-	(1) Godot 3.0.6 - Stable (Prefered)
-	(2) Godot 2.1.5 - Old Stable
-    (3) Godot 3.1 - RC1 (Testing)
+	(1) Godot 3.1 - Stable (Prefered)
+	(2) Godot 3.0.6 - Stable
+    (3) Godot 2.1.5 - Old Stable
 	(4) Install All 3 Versions
 	(0) Exit"
 	read -p "Enter Selection[1,2,3,4,0] >"
@@ -150,20 +128,18 @@ function main(){
 		fi
 
 		if [[ $REPLY == 1 ]]; then
-			VERSION="3.0.6"
+			VERSION="3.1"
 			downloadcommands
 		fi
 
 		if [[ $REPLY == 2 ]]; then
-			VERSION="2.1.5"
+			VERSION="3.0.6"
 			downloadcommands
 		fi
+
 		if [[ $REPLY == 3 ]]; then
-			VERSION="3.1"
-			echo "Downloading $BIT bit Version of Godot $VERSION"
-			downloadbeta
-			decompress
-			cleanup
+			VERSION="2.1.5"
+			downloadcommands
 		fi
 
 		if [[ $REPLY == 4 ]]; then
@@ -180,8 +156,9 @@ function main(){
 			makedesktopentry
 			cleanup
 			VERSION="3.1"
-			downloadbeta
+			download
 			decompress
+			makedesktopentry
 			cleanup
 		fi
 	else

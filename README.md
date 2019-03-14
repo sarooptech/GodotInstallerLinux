@@ -2,7 +2,7 @@
 Shell Script to Install Godot Engine using Terminal.
 
 # Features
-* You can Install **3.0.6**, **2.1.5** & **3.1 Beta**.
+* You can Install  **3.1 Stable**, **3.0.6 Stable** & **2.1.5 Stable**.
 * Option for Installing all 3 versions at a time.
 * Automatically generates Desktop entries for Applications Menu.
 
@@ -41,7 +41,7 @@ Now Just Input Installation Choices and hit Enter. That's it.
 
 # References
 * [Godot Engine][1] - Free and open source 2D and 3D game engine
-* [Godot Icon PNG][2] - Wikimedia
+* [Godot Icon][2] - Wikimedia
 
 [1]: https://godotengine.org
 [2]: https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Godot_icon.svg/2000px-Godot_icon.svg.png
