@@ -114,7 +114,7 @@ function cleanup(){
 function main(){
 	checkbit
 	echo "Select Godot Version To Install
-	(1) Godot 3.1 - Stable (Prefered)
+	(1) Godot 3.1.1 - Stable (Prefered)
 	(2) Godot 3.0.6 - Stable
     (3) Godot 2.1.5 - Old Stable
 	(4) Install All 3 Versions
@@ -155,7 +155,7 @@ function main(){
 			decompress
 			makedesktopentry
 			cleanup
-			VERSION="3.1"
+			VERSION="3.1.1"
 			download
 			decompress
 			makedesktopentry
