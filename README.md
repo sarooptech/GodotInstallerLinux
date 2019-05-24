@@ -2,7 +2,7 @@
 Shell Script to Install Godot Engine using Terminal.
 
 # Features
-* You can Install  **3.1 Stable**, **3.0.6 Stable** & **2.1.5 Stable**.
+* You can Install  **3.1.1 Stable**, **3.0.6 Stable** & **2.1.5 Stable**.
 * Option for Installing all 3 versions at a time.
 * Automatically generates Desktop entries for Applications Menu.
 
