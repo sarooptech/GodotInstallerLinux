@@ -114,9 +114,9 @@ function cleanup(){
 function main(){
 	checkbit
 	echo "Select Godot Version To Install
-	(1) Godot 3.1.1 - Stable (Prefered)
+	(1) Godot 3.1.1 - Stable
 	(2) Godot 3.0.6 - Stable
-	(3) Godot 2.1.6 - Old Stable
+	(3) Godot 2.1.5 - Stable
 	(4) Install All 3 Versions
 	(0) Exit"
 	read -p "Enter Selection[1,2,3,4,0] >"
@@ -138,7 +138,7 @@ function main(){
 		fi
 
 		if [[ $REPLY == 3 ]]; then
-			VERSION="2.1.6"
+			VERSION="2.1.5"
 			downloadcommands
 		fi
 
@@ -150,7 +150,7 @@ function main(){
 			decompress
 			makedesktopentry
 			cleanup
-			VERSION="2.1.6"
+			VERSION="2.1.5"
 			download
 			decompress
 			makedesktopentry
