@@ -1,4 +1,4 @@
-# Godot Installer Linux (On hold currently because of lack of time.)
+# Godot Installer Linux (On hold currently because of busy life.)
 Shell Script to Install Godot Engine using Terminal.
 
 # Features
